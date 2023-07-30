@@ -25,13 +25,17 @@ const INITIAL_STATE = {
 const index = () => {
   const [state, setState] = useState(INITIAL_STATE);
 
+  const deepCloneBoard = () => {
+    return JSON.parse(JSON.stringify(state.board));
+  };
+
   const togglePlayer = () => {
     const currentPlayer = state.currentPlayer === "x" ? "o" : "x";
     setState((prev) => ({ ...prev, currentPlayer }));
   };
 
   const updateBoard = (row: number, col: number, player: string) => {
-    let mutableBoard = [...state.board];
+    let mutableBoard = deepCloneBoard();
     mutableBoard[row][col] = player;
     setState((prev) => ({ ...prev, board: mutableBoard }));
   };
@@ -60,7 +64,6 @@ const index = () => {
 
   const handleRestartGame = () => {
     setState(() => INITIAL_STATE);
-    console.log(state);
     console.log("restarted");
   };
 
